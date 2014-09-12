@@ -329,18 +329,13 @@ object like this: `{v: 'top', h: 'right'}`.
       if (transition) {
         transition.setup(this.target);
       }
-      // TODO(sorvell): bc 
+      var style = this.target.style;
       var computed = getComputedStyle(this.target);
-      this.targetStyle = {
-        position: computed.position === 'static' ? 'fixed' :
-            computed.position
-      };
-      if (!transition) {
-        this.target.style.outline = 'none';
-        // TODO(sorvell): needed for bc for now.
-        this.target.style.position = this.targetStyle.position;
+      if (computed.position === 'static') {
+        style.position = 'fixed';
       }
-      this.target.style.display = 'none';
+      style.outline = 'none';
+      style.display = 'none';
     },
 
     openedChanged: function() {
@@ -379,6 +374,7 @@ object like this: `{v: 'top', h: 'right'}`.
         // if we are showing, then take care when measuring
         this.prepareMeasure();
         this.measure();
+        this.positionTarget();
         this.updateTargetDimensions();
         this.finishMeasure();
         if (this.layered) {

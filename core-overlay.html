@@ -304,7 +304,7 @@ in order to position an overlay dynamically.
       if (!this.target) {
         return;
       }
-      if (old && this.getTransition(old)) {
+      if (old) {
         this.getTransition(old).teardown(this.target);
       }
       this.target.__overlaySetup = false;
